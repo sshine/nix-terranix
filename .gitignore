@@ -1,0 +1,4 @@
+*.token
+mechanikube/*
+.direnv/
+lefthook.yml
