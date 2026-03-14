@@ -29,6 +29,17 @@
 
     nixpkgs-terraform-providers-bin.url = "github:nix-community/nixpkgs-terraform-providers-bin";
     nixpkgs-terraform-providers-bin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
+    nixos-anywhere.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-anywhere.inputs.flake-parts.follows = "flake-parts";
+    nixos-anywhere.inputs.treefmt-nix.follows = "treefmt-nix";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -38,5 +49,10 @@
       import-tree,
       ...
     }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (import-tree ./modules);
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        (import-tree ./modules)
+        (import-tree ./machines)
+      ];
+    };
 }
