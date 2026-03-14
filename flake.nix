@@ -1,5 +1,5 @@
 {
-  description = "kube.mechanicus.xyz";
+  description = "dendritic flake for kube.mechanicus.xyz";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
