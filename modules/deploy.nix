@@ -1,7 +1,7 @@
 { inputs, self, ... }:
 {
   flake.deploy.nodes.mechanikube = {
-    hostname = "shen.mechanicus.xyz";
+    hostname = "kube.mechanicus.xyz";
     sshUser = "root";
     profiles.system = {
       user = "root";

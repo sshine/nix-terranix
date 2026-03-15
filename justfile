@@ -14,6 +14,10 @@ plan target='mechanikube':
 apply target='mechanikube':
     HCLOUD_TOKEN=$(cat hcloud.token) nix run .#{{target}}.apply
 
+# Install NixOS using nixos-anywhere
+install target='mechanikube':
+    nix run .#nixos-anywhere -- --flake '.#mechanikube' --target-host root@kube.mechanicus.xyz --build-on-remote
+
 # Destroy previously created infrastructure
 destroy target='mechanikube':
     HCLOUD_TOKEN=$(cat hcloud.token) nix run .#{{target}}.destroy

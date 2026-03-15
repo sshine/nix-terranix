@@ -33,7 +33,6 @@
                 doc: (.value.doc // "")
               }) |
               (map(.cmd | length) | max) as $w |
-              sort_by(.cmd) |
               map("  \(.cmd)\(" " * ($w - (.cmd | length)))\(if .doc != "" then " — \(.doc)" else "" end)") |
               .[]
             ' > $out
@@ -67,6 +66,7 @@
           self.formatter.${system}
           pkgs.just
           pkgs.opentofu
+          pkgs.hcloud
         ];
       };
     };

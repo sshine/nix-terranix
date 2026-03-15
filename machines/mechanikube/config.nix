@@ -1,14 +1,30 @@
-{ self, ... }:
+{ inputs, self, ... }:
 {
+  flake.nixosConfigurations.mechanikube = inputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      self.nixosModules.mechanikube-config
+      inputs.disko.nixosModules.disko
+    ];
+  };
+
   flake.nixosModules.mechanikube-config =
-    { pkgs, ... }:
+    {
+      lib,
+      modulesPath,
+      pkgs,
+      ...
+    }:
     {
       imports = [
-        self.nixosModules.mechanikube-hardware
+        (modulesPath + "/profiles/qemu-guest.nix")
         self.nixosModules.mechanikube-disko
       ];
 
       boot.loader.grub.enable = true;
+
+      networking.useDHCP = lib.mkDefault true;
+      nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
       services.openssh.enable = true;
       users.users.root.openssh.authorizedKeys.keys = [
